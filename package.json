@@ -1,6 +1,6 @@
 {
   "name": "purescript-mostly-dom",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A purescript wrapper for mostly-dom",
   "main": "index.js",
   "repository": "https://github.com/TylorS/purescript-mostly-dom",
