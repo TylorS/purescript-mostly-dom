@@ -7,7 +7,7 @@ var MostlyDomPatch = MostlyDom.init([])
 exports.patch = patch
 exports.elementToVNode = elementToVNode
 
-function patch(formerVNode) {
+function patch (formerVNode) {
   return function (vNode) {
     vNode = MostlyDomPatch(PSToJS(formerVNode), PSToJS(vNode))
 
@@ -19,7 +19,7 @@ function elementToVNode (element) {
   return JSToPS(MostlyDom.elementToVNode(element))
 }
 
-function PSToJS(vNodeWrapper) {
+function PSToJS (vNodeWrapper) { // eslint-disable-line complexity
   var vNode = vNodeWrapper.value0
 
   if (vNode.value) {
@@ -60,14 +60,14 @@ function PSToJS(vNodeWrapper) {
       propertyName = propertyName[0].toLowerCase() + propertyName.slice(1)
 
       if (propertyName === 'update' || propertyName === 'remove' ||
-        propertyName === 'prepatch' || propertyName === 'postpatch')
-      {
+        propertyName === 'prepatch' || propertyName === 'postpatch'
+      ) {
         value = uncurry2(value)
       }
 
       if (propertyName === 'init' || propertyName === 'create' ||
-        propertyName === 'destroy' || propertyName === 'insert')
-      {
+        propertyName === 'destroy' || propertyName === 'insert'
+      ) {
         var f = value
         value = function (x) { f(JSToPS(x)) }
         value.f = f
@@ -92,10 +92,11 @@ function PSToJS(vNodeWrapper) {
   }
 }
 
-function uncurry2(f) {
+function uncurry2 (f) {
   function uncurried (a, b) {
-    if (typeof b === 'function')
+    if (typeof b === 'function') {
       return f(JSToPS(a))(b)
+    }
 
     return f(JSToPS(a))(JSToPS(b))
   }
@@ -107,7 +108,7 @@ function uncurry2(f) {
 
 var hooks = ['init', 'create', 'update', 'remove', 'destroy', 'prepatch', 'postpatch', 'insert']
 
-function JSToPS (vNode) {
+function JSToPS (vNode) { // eslint-disable-line complexity
   if (vNode.text) {
     return H.TextVNode.create({ value: vNode.text, element: Maybe.Just.create(vNode.element) })
   }
@@ -137,8 +138,9 @@ function JSToPS (vNode) {
   for (var i = 0; i < keys.length; ++i) {
     var key = keys[i]
 
-    if (key === 'attrs' || key === 'key')
+    if (key === 'attrs' || key === 'key') {
       continue
+    }
 
     var name = key[0].toUpperCase() + key.slice(1)
 
@@ -147,8 +149,9 @@ function JSToPS (vNode) {
       continue
     }
 
-    if (H[name]) {}
+    if (H[name]) {
       properties.push(H[name].create(props[key]))
+    }
   }
 
   return H.ElementVNode.create({
